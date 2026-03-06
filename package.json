@@ -1,0 +1,20 @@
+{
+  "name": "@citadel-guilds/sdk",
+  "version": "1.0.0",
+  "description": "Public Guild SDK \u2014 adapters and types for Citadel Nexus guilds",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist",
+    "test": "vitest",
+    "lint": "eslint . --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.0.0",
+    "tsup": "^6.0.0",
+    "eslint": "^8.0.0"
+  }
+}

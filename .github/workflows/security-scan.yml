@@ -1,0 +1,21 @@
+name: Security Scan
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Grep for banned patterns
+        run: |
+          set -e
+          banned='sapient|watcher|caps|smart_bank|xp_ledger|tp_balance|cgrf|fate|ags|SUPABASE_SERVICE_ROLE_KEY|SUPABASE_URL|NATS_TOKEN|NATS_URL|[0-9]{1,3}(\.[0-9]{1,3}){3}|AKIA[0-9A-Z]{16}'
+          if git grep -I --line-number -E "$banned" -- ':!node_modules' ':!dist' ':!.github/workflows' ; then
+            echo '::error::Banned pattern detected — see above matches'
+            exit 1
+          else
+            echo 'No banned patterns found'
+          fi
